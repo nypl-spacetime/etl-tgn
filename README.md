@@ -1,10 +1,10 @@
-# Histograph Data - TGN module
+# Histograph Data - TGN data module
 
-darta mofule for data tool
-
-See
+Downloads and converts data from Getty Thesaurus of Geographic Names, see https://github.com/histograph/data for details.
 
 ## Configuration
+
+See https://github.com/histograph/config.
 
 ## License
 
