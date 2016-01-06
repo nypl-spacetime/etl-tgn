@@ -11,18 +11,6 @@ var sparqlFiles = [
   'tgn-terms'
 ];
 
-var types = {
-  nations: 'hg:Country',
-  area: 'hg:Area',
-  canals: 'hg:Water',
-  channels: 'hg:Water',
-  'general regions': 'hg:Region',
-  'inhabited places': 'hg:Place',
-  provinces: 'hg:Province',
-  'second level subdivisions': 'hg:Region',
-  neighborhoods: 'hg:Neighbourhood'
-};
-
 var sparqlEndpoint = 'http://vocab.getty.edu/sparql.rdf';
 
 function download(config, dir, writer, callback) {
@@ -59,7 +47,7 @@ function convert(config, dir, writer, callback) {
       fs.readFile(path.join(dir, sparqlFile + '.' + parent.replace('tgn:', '') + '.xml'), function(err, data) {
         parser.parseString(data, function(err, result) {
           async.eachSeries(result['rdf:RDF']['rdf:Description'], function(element, callback) {
-            parseElement(element, function(err) {
+            parseElement(config, element, function(err) {
               callback(err);
             });
           },
@@ -100,9 +88,9 @@ function convert(config, dir, writer, callback) {
     return null;
   }
 
-  function parseElement(element, callback) {
+  function parseElement(config, element, callback) {
     var elementType = getElementTagValue(element, 'tgn:typeTerm');
-    var type = types[elementType];
+    var type = config.types[elementType];
 
     // Only process elements with valid type
     if (type) {
@@ -162,7 +150,7 @@ function convert(config, dir, writer, callback) {
           obj: {
             from: uri,
             to: broaderPreferred,
-            type: 'hg:liesIn'
+            type: config.relations.liesIn
           }
         });
       }
@@ -176,7 +164,7 @@ function convert(config, dir, writer, callback) {
           obj: {
             from: uri,
             to: subject,
-            type: 'hg:sameHgConcept'
+            type: config.relations.equivalence
           }
         });
       }
