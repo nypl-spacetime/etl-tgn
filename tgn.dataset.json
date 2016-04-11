@@ -5,7 +5,11 @@
   "description": "London or Londinium? TGN is a structured vocabulary, including names, descriptions, and other information for places important to art and architecture.",
   "author": "The J. Paul Getty Trust",
   "website": "http://www.getty.edu/research/tools/vocabularies/tgn/",
-  "edits": "",
   "editor": "Histograph",
-  "creationDate": ""
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "type": {
+      "@type": "xsd:string"
+    }
+  }
 }
